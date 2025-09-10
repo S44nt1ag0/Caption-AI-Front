@@ -38,7 +38,7 @@ export default function Form() {
       if (result.success && result.token) {
         login(result.token);
       } else {
-        setError(result.error || "Erro no login");
+        setError("Invalid Email or Username.");
       }
     } catch (err) {
       setError("Erro de conexão");
