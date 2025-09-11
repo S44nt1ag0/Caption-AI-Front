@@ -6,7 +6,7 @@ export async function GET() {
   const token = cookieStore.get("token")?.value;
 
   if (!token) {
-    return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
   try {
@@ -26,6 +26,6 @@ export async function GET() {
     const data = await res.json();
     return NextResponse.json(data);
   } catch {
-    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
+    return NextResponse.json({ error: "Internal error." }, { status: 500 });
   }
 }

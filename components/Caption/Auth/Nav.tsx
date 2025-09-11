@@ -17,6 +17,11 @@ interface NavAuthProps {
 }
 
 export default function NavAuth({ user }: NavAuthProps) {
+
+  const logout = () => {
+    console.log("click")
+  }
+
   return (
     <div className="w-full flex mt-10 items-center justify-between p-3">
       <div className="flex gap-3 items-center">
@@ -27,7 +32,7 @@ export default function NavAuth({ user }: NavAuthProps) {
           alt="Logo"
         />
         <div>
-          <h1 className="text-2xl font-bold text-white/80">{user?.name}</h1>
+          <h1 className="text-2xl -mb-1 font-bold text-white/70">{user?.name}</h1>
           <a className="font-semibold text-sm">
             {user.premium ? "Premium User" : "The Best AI Caption"}
           </a>
@@ -37,7 +42,9 @@ export default function NavAuth({ user }: NavAuthProps) {
       <div className="flex items-center gap-5">
         <a className="font-normal cursor-pointer"> Historico </a>
 
-        <Button variant="outline" className="p-5 cursor-pointer">
+        <Button
+        onClick={logout}
+        variant="outline" className="p-5 cursor-pointer">
           Logout
         </Button>
       </div>

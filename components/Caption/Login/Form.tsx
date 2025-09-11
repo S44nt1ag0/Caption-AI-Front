@@ -51,7 +51,7 @@ export default function Form() {
     <div className="w-1/2 max-w-[1200px] flex justify-center items-center fixed h-[calc(100vh-80px)] top-20">
       <form
         onSubmit={handleSubmit}
-        className="w-3/6 flex flex-col gap-8 p-8 rounded-xl shadow-lg"
+        className="w-3/6 flex flex-col gap-8 p-8"
       >
         <div>
           <h1 className="text-2xl font-bold text-white/80">Login</h1>
