@@ -5,6 +5,7 @@ import robotImage from "../../../public/img/robot_home.png";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function About() {
   const router = useRouter();
@@ -14,7 +15,16 @@ export default function About() {
   };
 
   return (
-    <div className="w-full mt-30 items-center flex">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{
+        duration: 1.2,
+        ease: "easeInOut",
+      }}
+      className="w-full mt-30 items-center flex"
+    >
       <div className="w-1/2">
         <Image src={robotImage} width={400} height={400} alt="robot" />
       </div>
@@ -49,6 +59,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

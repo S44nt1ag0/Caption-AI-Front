@@ -4,6 +4,7 @@ import { Button } from "../../ui/button";
 import Image from "next/image";
 import Logo from "@/public/img/logo.png";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Nav() {
   const router = useRouter();
@@ -13,7 +14,18 @@ export default function Nav() {
   };
 
   return (
-    <div className="w-full mt-6 p-4 border-1 border-white/10 shadow-2xs rounded-3xl flex items-center justify-between bg-black/10 backdrop-blur-3xl">
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 50 }}
+      transition={{
+        duration: 0.6,
+        ease: "easeInOut",
+        damping: 15,
+        stiffness: 100,
+      }}
+      className="w-full mt-6 p-4 border-1 border-white/10 shadow-2xs rounded-3xl flex items-center justify-between bg-black/10 backdrop-blur-3xl"
+    >
       <div className="flex gap-4 items-center p-3">
         <div>
           <Image src={Logo} width={80} height={80} alt="Logo" />
@@ -36,6 +48,6 @@ export default function Nav() {
           Login{" "}
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 }
