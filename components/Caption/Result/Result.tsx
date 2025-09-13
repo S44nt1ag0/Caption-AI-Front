@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ICaption {
   success: boolean;
@@ -19,7 +21,25 @@ interface Caption {
 }
 
 export default function Result({ caption }: Caption) {
+  const [isCopied, setIsCopied] = useState(false);
   const router = useRouter();
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(caption?.body);
+      setIsCopied(true);
+      toast.success("Copiado...", {
+        style: {
+          background: "#333",
+          color: "#fff",
+          padding: "10px",
+        },
+      });
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error("Falha ao copiar: ", err);
+    }
+  };
 
   if (!caption.body)
     return (
@@ -55,6 +75,8 @@ export default function Result({ caption }: Caption) {
       transition={{ duration: 0.6, ease: "easeInOut" }}
       className="w-full mt-14"
     >
+      <Toaster position="top-right" />
+
       <div className="flex justify-between items-center gap-3">
         <div className="w-1/2 flex flex-col gap-3">
           <div className="flex gap-3 items-center">
@@ -81,10 +103,11 @@ export default function Result({ caption }: Caption) {
 
           <div className="w-full mt-2 flex gap-2">
             <Button
+              onClick={handleCopy}
               variant="outline"
               className="w-1/2 shadow-2xl cursor-pointer pt-6 pb-6"
             >
-              Copiar
+              {isCopied ? "Copied!" : "Copy"}
             </Button>
             <Button
               onClick={() => router.back()}
