@@ -4,7 +4,7 @@ import Image from "next/image";
 import Logo from "@/public/img/logo.png";
 import LogoPremium from "@/public/img/logo_premium.png";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface User {
   id: string;
@@ -18,8 +18,9 @@ interface NavAuthProps {
 }
 
 export default function NavAuth({ user }: NavAuthProps) {
-  const logout = () => {
-    console.log("click");
+  const logout = async () => {
+    await fetch("/api/logout");
+    window.location.href = "/auth";
   };
 
   return (

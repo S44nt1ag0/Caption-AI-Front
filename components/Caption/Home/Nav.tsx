@@ -38,14 +38,13 @@ export default function Nav() {
       </div>
 
       <div className="flex gap-7 justify-center items-center p-6">
-        <a className="cursor-pointer font-semibold text-white/90">About</a>
+        <a className="cursor-pointer font-semibold text-white/90">Premium</a>
         <Button
           onClick={handleRedirect}
           variant="outline"
           className="p-6 w-3/5 rounded-full cursor-pointer"
         >
-          {" "}
-          Login{" "}
+          Login
         </Button>
       </div>
     </motion.div>
