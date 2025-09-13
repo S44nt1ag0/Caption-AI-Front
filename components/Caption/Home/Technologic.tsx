@@ -19,62 +19,66 @@ export default function Tecnologic() {
         duration: 1.2,
         ease: "easeInOut",
       }}
-      className="w-full mt-30 gap-10 items-center flex"
+      className="w-full mt-30 flex flex-col lg:flex-row items-center gap-10 px-3 sm:px-6"
     >
-      <div className="w-1/2 flex gap-5 flex-col">
+      <div className="w-full lg:w-1/2 flex flex-col gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-white/90">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white/90 text-center lg:text-left">
             Tecnologia e Segurança
           </h1>
-          <h3 className="text-white/50 font-semibold">
+          <h3 className="text-white/50 font-semibold text-center lg:text-left">
             Combinamos Tecnologia e Segurança
           </h3>
         </div>
 
-        <p className="font-semibold text-white/80">
+        <p className="font-semibold text-white/80 text-center lg:text-left">
           Seus Prompts estão seguros, Lorem ipsum dolor sit amet consectetur
           adipisicing elit. Eos totam molestiae, quia voluptatum repellat alias
           possimus dignissimos dicta nemo, enim iusto excepturi quod harum! Quam
           quasi eligendi ea incidunt ullam!
         </p>
 
-        <div className="w-full flex gap-2 mt-10">
-          <div className="w-1/3 flex gap-4 flex-col bg-gradient-to-b from-green-600/10 to-transparent shadow-2xs p-5 items-center justify-center rounded-2xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          <div className="flex flex-col gap-4 bg-gradient-to-b from-green-600/10 to-transparent shadow-2xs p-5 items-center justify-center rounded-2xl">
             <Image src={SecureIcon} width={80} height={80} alt="SecureIcon" />
             <Badge
               variant="outline"
-              className="p-2 pl-6 pr-6 border-green-700/30 text-bold rounded-full"
+              className="p-2 pl-6 pr-6 border-green-700/30 font-bold rounded-full"
             >
-              {" "}
               Segurança
             </Badge>
           </div>
 
-          <div className="w-1/3 flex gap-4 flex-col p-5 items-center bg-gradient-to-t from-yellow-400/10 to-transparent backdrop-blur-3xl justify-center rounded-2xl">
+          <div className="flex flex-col gap-4 p-5 items-center bg-gradient-to-t from-yellow-400/10 to-transparent backdrop-blur-3xl justify-center rounded-2xl">
             <Image src={Bolt} width={80} height={80} alt="Bolt" />
             <Badge
               variant="outline"
-              className="p-2 pl-6 pr-6 border-yellow-300/20 text-bold rounded-full"
+              className="p-2 pl-6 pr-6 border-yellow-300/20 font-bold rounded-full"
             >
-              {" "}
               Velocidade
             </Badge>
           </div>
 
-          <div className="w-1/3 flex gap-4 flex-col bg-gradient-to-b from-blue-600/10 to-transparent shadow-2xs p-5 items-center justify-center rounded-2xl">
+          <div className="flex flex-col gap-4 bg-gradient-to-b from-blue-600/10 to-transparent shadow-2xs p-5 items-center justify-center rounded-2xl">
             <Image src={Otimizacao} width={80} height={80} alt="Otimizacao" />
             <Badge
               variant="outline"
-              className="p-2 pl-6 border-blue-600/40 pr-6 text-bold rounded-full"
+              className="p-2 pl-6 pr-6 border-blue-600/40 font-bold rounded-full"
             >
-              {" "}
-              Otimizaçao{" "}
+              Otimização
             </Badge>
           </div>
         </div>
       </div>
-      <div className="w-1/2">
-        <Image src={RobotRelax} width={430} height={430} alt="RobotRelax" />
+
+      <div className="w-full lg:w-1/2 flex justify-center mt-6 lg:mt-0 hidden sm:flex">
+        <Image
+          src={RobotRelax}
+          width={430}
+          height={430}
+          alt="RobotRelax"
+          className="max-w-full h-auto"
+        />
       </div>
     </motion.div>
   );

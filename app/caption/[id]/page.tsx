@@ -6,6 +6,8 @@ import NavAuth from "@/components/Caption/Auth/Nav";
 import Result from "@/components/Caption/Result/Result";
 import toast from "react-hot-toast";
 
+import Loading from "@/components/Utils/Loading";
+
 interface ICaption {
   success: boolean;
   url: string;
@@ -46,11 +48,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   }, [id]);
 
   if (loading || fetching) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-lg">Loading...</div>
-      </div>
-    );
+    return <Loading />
   }
 
   if (!id) {

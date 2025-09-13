@@ -45,13 +45,6 @@ export default function Result({ caption }: Caption) {
   if (!caption.body)
     return (
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{
-          duration: 1.2,
-          ease: "easeInOut",
-        }}
         className="min-h-full mt-20 flex flex-col gap-4 items-center justify-center"
       >
         <div className="text-lg font-bold text-white/60">
@@ -74,27 +67,27 @@ export default function Result({ caption }: Caption) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="w-full mt-16"
+      className="w-full mt-16 px-4 md:px-0"
     >
       <Toaster position="top-right" />
 
-      <div className="flex justify-between items-center gap-3">
-        <div className="w-1/2 flex flex-col gap-3">
-          <div className="gap-3 items-center">
-            <h1 className="text-lg font-bold text-white/50">Caption Result</h1>
-          </div>
+      <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+        <div className="w-full md:w-1/2 flex flex-col gap-3">
+          <h1 className="text-lg font-bold text-white/50">Caption Result</h1>
         </div>
       </div>
 
-      <div className="w-full flex gap-8 mt-6">
-        <div className="w-1/2 flex flex-col gap-5">
-          <Image
-            src={caption.thumbnail}
-            width={500}
-            height={500}
-            alt="thumb"
-            className="rounded-3xl shadow-2xl object-cover"
-          />
+      <div className="w-full flex flex-col md:flex-row gap-8 mt-6">
+        <div className="w-full md:w-1/2 flex flex-col gap-5">
+          <div className="w-full">
+            <Image
+              src={caption.thumbnail}
+              width={500}
+              height={500}
+              alt="thumb"
+              className="rounded-3xl shadow-2xl object-cover w-full h-auto"
+            />
+          </div>
 
           <h1 className="text-lg font-semibold text-white/60">
             {caption.title.length > 34
@@ -102,29 +95,29 @@ export default function Result({ caption }: Caption) {
               : caption.title}
           </h1>
 
-          <div className="w-full mt-2 flex gap-2">
+          <div className="w-full mt-2 flex flex-col sm:flex-row gap-2">
             <Button
               onClick={handleCopy}
               variant="outline"
-              className="w-1/2 shadow-2xl cursor-pointer pt-6 pb-6"
+              className="w-full sm:w-1/2 shadow-2xl cursor-pointer pt-6 pb-6"
             >
               <LuCopy /> {isCopied ? "Copied!" : "Copy"}
             </Button>
             <Button
               onClick={() => router.back()}
               variant="ghost"
-              className="w-1/2 cursor-pointer pt-6 pb-6"
+              className="w-full sm:w-1/2 cursor-pointer pt-6 pb-6"
             >
               Voltar
             </Button>
           </div>
         </div>
 
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <Textarea
             value={caption.body}
             disabled
-            className="min-h-full max-h-[500px] text-left text-semibold"
+            className="min-h-[200px] md:min-h-[500px] max-h-[500px] w-full text-left text-semibold resize-none"
           />
         </div>
       </div>

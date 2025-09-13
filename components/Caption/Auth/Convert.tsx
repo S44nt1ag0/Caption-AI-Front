@@ -75,7 +75,7 @@ export default function Convert() {
   return (
     <form
       onSubmit={convert}
-      className="w-full gap-5 p-5 flex flex-col min-h-[400px] justify-center items-center"
+      className="w-full gap-3 md:gap-5 p-4 md:p-5 flex flex-col min-h-[300px] md:min-h-[400px] justify-center items-center"
     >
       <Toaster position="top-right" />
 
@@ -87,28 +87,28 @@ export default function Convert() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="w-full"
+            className="w-full max-w-md md:max-w-full"
           >
-            <div className="w-full mb-6">
-              <h1 className="text-2xl font-bold text-white/80">
+            <div className="w-full mb-4 md:mb-6 text-center md:text-left">
+              <h1 className="text-xl md:text-2xl font-bold text-white/80">
                 Converta Seu Vídeo
               </h1>
-              <a className="font-semibold text-white/60">
+              <p className="font-semibold text-white/60 text-sm md:text-base">
                 Aceitamos apenas URL do YouTube
-              </a>
+              </p>
             </div>
 
-            <div className="w-full gap-5 flex justify-center items-center">
+            <div className="w-full gap-3 md:gap-5 flex flex-col md:flex-row justify-center items-center">
               <Input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="URL YouTube"
-                className="p-7 rounded-full"
+                className="p-7 rounded-full w-full text-sm md:text-base"
               />
               <Button
                 variant="outline"
-                className="p-7 rounded-full cursor-pointer"
+                className="p-7 rounded-full cursor-pointer w-full md:w-auto text-sm md:text-base"
               >
                 Convert
               </Button>
@@ -121,28 +121,30 @@ export default function Convert() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="w-full flex flex-col gap-8 justify-center text-center items-center"
+            className="w-full max-w-md md:max-w-full flex flex-col gap-6 md:gap-8 justify-center text-center items-center"
           >
             <div>
-              <h1 className="text-2xl font-bold text-white/70">Success</h1>
-              <a className="font-semibold -mt-4 text-white/40">
+              <h1 className="text-xl md:text-2xl font-bold text-white/70">
+                Success
+              </h1>
+              <p className="font-semibold text-white/40 text-sm md:text-base">
                 Successfully Converted
-              </a>
+              </p>
             </div>
 
-            <div className="flex gap-6 cursor-pointer items-center justify-center">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 cursor-pointer items-center justify-center w-full lg:w-1/4">
               <Button
                 onClick={() => router.push(`/caption/${link}`)}
                 type="button"
                 variant="outline"
-                className="p-6 w-4/5 shadow-2xs cursor-pointer"
+                className="p-6 w-full md:w-4/5 shadow-2xs cursor-pointer text-sm md:text-base"
               >
                 Next
               </Button>
 
               <Button
                 type="button"
-                className="p-6 cursor-pointer w-3/5 bg-black/50 hover:bg-black/10 text-white shadow-2xs"
+                className="p-6 cursor-pointer w-full md:w-3/5 bg-black/50 hover:bg-black/10 text-white shadow-2xs text-sm md:text-base"
                 onClick={() => setShowMain(true)}
               >
                 Back

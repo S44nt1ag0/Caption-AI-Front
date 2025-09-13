@@ -34,18 +34,19 @@ export default function NavAuth({ user }: NavAuthProps) {
         damping: 15,
         stiffness: 100,
       }}
-      className="w-full flex mt-10 items-center justify-between"
+      className="w-full flex items-center justify-between mt-10 px-4 md:px-0"
     >
-      <div className="flex gap-3 items-center">
+      <div className="flex items-center gap-3">
         <Image
           src={user.premium ? LogoPremium : Logo}
           width={80}
           height={80}
           alt="Logo"
+          className="hidden md:block"
         />
         <div>
-          <h1 className="text-2xl -mb-1 font-bold text-white/70">
-            {user?.name}
+          <h1 className="text-2xl font-bold text-white/70 -mb-1">
+            {user.name ? user.name?.split(" ")[0] : "Pedro"}
           </h1>
           <a className="font-semibold text-sm">
             {user.premium ? "Premium User" : "The Best AI Caption"}
@@ -54,8 +55,7 @@ export default function NavAuth({ user }: NavAuthProps) {
       </div>
 
       <div className="flex items-center gap-5">
-        <a className="font-normal cursor-pointer"> Historico </a>
-
+        <a className="font-normal cursor-pointer">Historico</a>
         <Button
           onClick={logout}
           variant="outline"

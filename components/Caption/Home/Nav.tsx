@@ -24,25 +24,26 @@ export default function Nav() {
         damping: 15,
         stiffness: 100,
       }}
-      className="w-full mt-6 p-4 border-1 border-white/10 shadow-2xs rounded-3xl flex items-center justify-between bg-black/10 backdrop-blur-3xl"
+      className="w-full mt-6 px-6 sm:px-6 py-4 shadow-2xs rounded-3xl flex items-center justify-between backdrop-blur-3xl"
     >
-      <div className="flex gap-4 items-center p-3">
-        <div>
+      <div className="flex items-center gap-4">
+        <div className="hidden sm:block">
           <Image src={Logo} width={80} height={80} alt="Logo" />
         </div>
         <div>
-          {" "}
           <h1 className="text-2xl font-bold text-white/80">Caption AI</h1>
-          <a className="font-semibold text-sm">The Best AI Caption</a>
+          <a className="font-semibold text-sm text-white/60">
+            The Best AI Caption
+          </a>
         </div>
       </div>
 
-      <div className="flex gap-7 justify-center items-center p-6">
+      <div className="flex items-center gap-7">
         <a className="cursor-pointer font-semibold text-white/90">Premium</a>
         <Button
           onClick={handleRedirect}
           variant="outline"
-          className="p-6 w-3/5 rounded-full cursor-pointer"
+          className="px-6 py-6 rounded-full cursor-pointer"
         >
           Login
         </Button>

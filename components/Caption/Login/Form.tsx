@@ -40,7 +40,7 @@ export default function Form() {
       } else {
         setError("Invalid Email or Username.");
       }
-    } catch (err) {
+    } catch {
       setError("Erro de conexão");
     } finally {
       setIsLoading(false);
@@ -48,10 +48,10 @@ export default function Form() {
   };
 
   return (
-    <div className="w-1/2 max-w-[1200px] flex justify-center items-center fixed h-[calc(100vh-80px)] top-20">
+    <div className="w-full lg:w-1/2 flex justify-center items-center fixed h-[calc(100vh-80px)] top-20">
       <form
         onSubmit={handleSubmit}
-        className="w-3/6 flex flex-col gap-8 p-8"
+        className="w-full lg:w-1/2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl flex flex-col gap-8 p-8"
       >
         <div>
           <h1 className="text-2xl font-bold text-white/80">Login</h1>
