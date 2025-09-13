@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { LuCopy } from "react-icons/lu";
 
 interface ICaption {
   success: boolean;
@@ -73,14 +74,14 @@ export default function Result({ caption }: Caption) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="w-full mt-14"
+      className="w-full mt-16"
     >
       <Toaster position="top-right" />
 
       <div className="flex justify-between items-center gap-3">
         <div className="w-1/2 flex flex-col gap-3">
-          <div className="flex gap-3 items-center">
-            <h1 className="text-2xl font-bold text-white/70">Result</h1>
+          <div className="gap-3 items-center">
+            <h1 className="text-lg font-bold text-white/50">Caption Result</h1>
           </div>
         </div>
       </div>
@@ -107,7 +108,7 @@ export default function Result({ caption }: Caption) {
               variant="outline"
               className="w-1/2 shadow-2xl cursor-pointer pt-6 pb-6"
             >
-              {isCopied ? "Copied!" : "Copy"}
+              <LuCopy /> {isCopied ? "Copied!" : "Copy"}
             </Button>
             <Button
               onClick={() => router.back()}
