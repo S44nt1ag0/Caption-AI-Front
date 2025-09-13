@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Convert() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [showMain, setShowMain] = useState(true);
   const [link, setLink] = useState("");
@@ -25,8 +27,6 @@ export default function Convert() {
       return;
     }
 
-    setShowMain(false);
-
     try {
       const res = await fetch("/api/convert", {
         method: "POST",
@@ -37,16 +37,31 @@ export default function Convert() {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        toast.error(errorData.error || "Erro ao converter.");
+        toast.error("Erro ao converter.", {
+          style: {
+            background: "#333",
+            color: "#fff",
+            padding: "10px",
+          },
+        });
         return;
       }
 
       const data = await res.json();
 
+      if (!data.id) {
+        toast.error("Erro ao converter.", {
+          style: {
+            background: "#333",
+            color: "#fff",
+            padding: "10px",
+          },
+        });
+      }
+
       setLink(data?.id);
       setShowMain(false);
-    } catch (error) {
+    } catch {
       toast.error("Internal Server error.", {
         style: {
           background: "#333",
@@ -117,9 +132,10 @@ export default function Convert() {
 
             <div className="flex gap-6 cursor-pointer items-center justify-center">
               <Button
+                onClick={() => router.push(`/caption/${link}`)}
                 type="button"
                 variant="outline"
-                className="p-6 w-4/5 shadow-2xs"
+                className="p-6 w-4/5 shadow-2xs cursor-pointer"
               >
                 Next
               </Button>
