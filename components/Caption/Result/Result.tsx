@@ -23,7 +23,16 @@ export default function Result({ caption }: Caption) {
 
   if (!caption.body)
     return (
-      <div className="min-h-full mt-20 flex flex-col gap-4 items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{
+          duration: 1.2,
+          ease: "easeInOut",
+        }}
+        className="min-h-full mt-20 flex flex-col gap-4 items-center justify-center"
+      >
         <div className="text-lg font-bold text-white/60">
           Caption ID is Invalid
         </div>
@@ -34,7 +43,7 @@ export default function Result({ caption }: Caption) {
         >
           Voltar
         </Button>
-      </div>
+      </motion.div>
     );
 
   return (
