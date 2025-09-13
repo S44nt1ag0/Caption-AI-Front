@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("session_token")?.value;
 
   if (!token) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });

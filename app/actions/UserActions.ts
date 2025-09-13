@@ -19,7 +19,7 @@ export async function loginUser(email: string, password: string) {
     }
 
     const cookieStore = await cookies();
-    cookieStore.set("token", data.access_token, {
+    cookieStore.set("session_token", data.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 24,

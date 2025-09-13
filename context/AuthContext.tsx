@@ -24,14 +24,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const tokenFromCookie = Cookies.get("token") || null;
+    const tokenFromCookie = Cookies.get("session_token") || null;
     setToken(tokenFromCookie);
     setIsLoading(false);
   }, []);
 
   const login = useCallback((newToken: string) => {
     setToken(newToken);
-    Cookies.set("token", newToken, { expires: 1, sameSite: "strict" });
+    Cookies.set("session_token", newToken, { expires: 1, sameSite: "strict" });
   }, []);
 
   const logout = useCallback(() => {
