@@ -3,17 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
-import { loginUser } from "@/app/actions/UserActions";
+import { createUser } from "@/app/actions/UserActions";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function Form() {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const { login, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -22,15 +23,15 @@ export default function Form() {
     }
   }, [isAuthenticated, router]);
 
-  const signup = (e: React.FormEvent) => {
+  const back = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/signup")
-  }
+    router.back();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError("Preencha todos os campos.");
+    if (!email || !password || !name) {
+      setError("Invalid Fields.");
       return;
     }
 
@@ -38,12 +39,12 @@ export default function Form() {
       setIsLoading(true);
       setError("");
 
-      const result = await loginUser(email, password);
+      const result = await createUser(email, password, name);
 
-      if (result.success && result.token) {
-        login(result.token);
+      if (result.success && result.message) {
+        router.push("/auth");
       } else {
-        setError("Invalid Email or Username.");
+        setError(result.error);
       }
     } catch {
       setError("Erro de conexão");
@@ -59,8 +60,8 @@ export default function Form() {
         className="w-full lg:w-1/2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl flex flex-col gap-8 p-8"
       >
         <div>
-          <h1 className="text-2xl font-bold text-white/80">Login</h1>
-          <p className="text-white/50">Entre com suas credenciais</p>
+          <h1 className="text-2xl font-bold text-white/80">SignUp</h1>
+          <p className="text-white/50">Cadastre suas credenciais</p>
         </div>
 
         {error && (
@@ -73,6 +74,17 @@ export default function Form() {
         )}
 
         <div className="flex flex-col gap-4">
+          <Input
+            type="name"
+            placeholder="Name"
+            value={name}
+            aria-invalid={!!error}
+            aria-describedby={error ? "login-error" : undefined}
+            onChange={(e) => setName(e.target.value)}
+            disabled={isLoading}
+            className="p-7"
+          />
+
           <Input
             type="email"
             placeholder="Email"
@@ -100,16 +112,16 @@ export default function Form() {
             disabled={isLoading}
             className="p-6 cursor-pointer w-1/2 font-semibold"
           >
-            {isLoading ? "Entrando..." : "Entrar"}
+            {isLoading ? "Cadastrando..." : "Cadastrar"}
           </Button>
 
           <Button
-            onClick={signup}
+            onClick={back}
             variant="ghost"
             disabled={isLoading}
             className="p-6 cursor-pointer w-1/2"
           >
-            Cadastrar
+            Back
           </Button>
         </div>
       </form>

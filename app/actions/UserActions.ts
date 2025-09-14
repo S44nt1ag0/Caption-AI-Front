@@ -34,3 +34,32 @@ export async function loginUser(email: string, password: string) {
     return { success: false, error: "Erro desconhecido no login" };
   }
 }
+
+export async function createUser(
+  email: string,
+  password: string,
+  name: string
+) {
+  try {
+    const response = await fetch("http://localhost:3000/v1/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, name }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || `Erro ${response.status}: ${response.statusText}`
+      );
+    }
+
+    return { success: true, message: data?.message || "User created." };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "Internal server error." };
+  }
+}
