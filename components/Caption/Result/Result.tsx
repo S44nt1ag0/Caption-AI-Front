@@ -71,12 +71,6 @@ export default function Result({ caption }: Caption) {
     >
       <Toaster position="top-right" />
 
-      <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-        <div className="w-full md:w-1/2 flex flex-col gap-3">
-          <h1 className="text-lg font-bold text-white/50">Caption Result</h1>
-        </div>
-      </div>
-
       <div className="w-full flex flex-col md:flex-row gap-8 mt-6">
         <div className="w-full md:w-1/2 flex flex-col gap-5">
           <div className="w-full">
