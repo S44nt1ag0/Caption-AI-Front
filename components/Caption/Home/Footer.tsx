@@ -43,7 +43,7 @@ export default function Footer() {
         <a className="font-semibold cursor-pointer text-white/90">Contato</a>
         <Button
           variant="outline"
-          className="p-5 rounded-full w-full max-w-xs sm:w-auto cursor-pointer"
+          className="p-6 rounded-full w-full max-w-xs sm:w-auto cursor-pointer"
         >
           Duvidas
         </Button>
