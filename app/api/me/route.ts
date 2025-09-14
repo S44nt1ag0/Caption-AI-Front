@@ -10,7 +10,7 @@ export async function GET() {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/v1/me", {
+    const res = await fetch(`${process.env.BACKEND_ENDPOINT}/v1/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

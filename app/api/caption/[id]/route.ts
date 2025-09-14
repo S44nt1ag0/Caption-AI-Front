@@ -19,7 +19,7 @@ export async function GET(
   }
 
   try {
-    const res = await fetch("http://localhost:3000/v1/caption/" + id, {
+    const res = await fetch(`${process.env.BACKEND_ENDPOINT}/v1/caption/` + id, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

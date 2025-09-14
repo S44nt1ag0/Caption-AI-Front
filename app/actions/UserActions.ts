@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 export async function loginUser(email: string, password: string) {
   try {
-    const response = await fetch("http://localhost:3000/v1/login", {
+    const response = await fetch(`${process.env.BACKEND_ENDPOINT}/v1/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -41,7 +41,7 @@ export async function createUser(
   name: string
 ) {
   try {
-    const response = await fetch("http://localhost:3000/v1/create", {
+    const response = await fetch(`${process.env.BACKEND_ENDPOINT}/v1/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, name }),
