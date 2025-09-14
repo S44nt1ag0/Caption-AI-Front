@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { loginUser } from "@/app/actions/UserActions";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Form() {
   const [email, setEmail] = useState("");
@@ -24,8 +25,8 @@ export default function Form() {
 
   const signup = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/signup")
-  }
+    router.push("/signup");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +54,12 @@ export default function Form() {
   };
 
   return (
-    <div className="w-full lg:w-1/2 flex justify-center items-center fixed h-[calc(100vh-80px)] top-20">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.2, ease: "easeInOut" }}
+      className="w-full lg:w-1/2 flex justify-center items-center fixed h-[calc(100vh-80px)] top-20"
+    >
       <form
         onSubmit={handleSubmit}
         className="w-full lg:w-1/2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl flex flex-col gap-8 p-8"
@@ -113,6 +119,6 @@ export default function Form() {
           </Button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }

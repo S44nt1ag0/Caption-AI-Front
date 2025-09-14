@@ -45,6 +45,9 @@ export default function Result({ caption }: Caption) {
   if (!caption.body)
     return (
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
         className="min-h-full mt-20 flex flex-col gap-4 items-center justify-center"
       >
         <div className="text-lg font-bold text-white/60">
