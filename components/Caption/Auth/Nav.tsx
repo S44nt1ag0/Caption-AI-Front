@@ -34,7 +34,7 @@ export default function NavAuth({ user }: NavAuthProps) {
         damping: 15,
         stiffness: 100,
       }}
-      className="w-full flex items-center justify-between mt-10 px-4 md:px-0"
+      className="w-full flex items-center justify-between mt-10 px-6 md:px-0"
     >
       <div className="flex items-center gap-3">
         <Image

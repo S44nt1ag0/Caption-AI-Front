@@ -6,12 +6,14 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { BeatLoader } from 'react-spinners';
 
 export default function Convert() {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [showMain, setShowMain] = useState(true);
   const [link, setLink] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const convert = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +28,8 @@ export default function Convert() {
       });
       return;
     }
+
+    setLoading(true);
 
     try {
       const res = await fetch("/api/convert", {
@@ -69,6 +73,8 @@ export default function Convert() {
           padding: "10px",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,10 +113,12 @@ export default function Convert() {
                 className="p-7 rounded-full w-full text-sm md:text-base"
               />
               <Button
+                type="submit"
                 variant="outline"
+                disabled={loading}
                 className="p-7 rounded-full cursor-pointer w-full md:w-auto text-sm md:text-base"
               >
-                Convert
+                {loading ? <BeatLoader color="white" size={8} speedMultiplier={1} /> : "Convert"}
               </Button>
             </div>
           </motion.div>
