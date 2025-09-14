@@ -26,7 +26,11 @@ export async function POST(req: Request) {
     });
 
     const data = await res.json();
-    console.log(data)
+    
+    if(data.error){
+      return NextResponse.json({ error: data?.message }, { status: 404 });
+    }
+
     return NextResponse.json(data, { status: res.status });
   } catch (err) {
     console.error(err);

@@ -40,8 +40,10 @@ export default function Convert() {
         body: JSON.stringify({ url: search }),
       });
 
-      if (!res.ok) {
-        toast.error("Erro ao converter.", {
+      const data = await res.json();
+
+      if (data.error) {
+        toast.error(data.error, {
           style: {
             background: "#333",
             color: "#fff",
@@ -50,8 +52,6 @@ export default function Convert() {
         });
         return;
       }
-
-      const data = await res.json();
 
       if (!data.id) {
         toast.error("Erro ao converter.", {
