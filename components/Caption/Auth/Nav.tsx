@@ -5,6 +5,7 @@ import Logo from "@/public/img/logo.png";
 import LogoPremium from "@/public/img/logo_premium.png";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -18,6 +19,8 @@ interface NavAuthProps {
 }
 
 export default function NavAuth({ user }: NavAuthProps) {
+  const router = useRouter();
+
   const logout = async () => {
     await fetch("/api/logout");
     window.location.href = "/auth";
@@ -38,11 +41,12 @@ export default function NavAuth({ user }: NavAuthProps) {
     >
       <div className="flex items-center gap-3">
         <Image
+          onClick={() => router.push("/dash")}
           src={user.premium ? LogoPremium : Logo}
           width={80}
           height={80}
           alt="Logo"
-          className="hidden md:block"
+          className="hidden md:block cursor-pointer"
         />
         <div>
           <h1 className="text-2xl font-bold text-white/70 -mb-1">
@@ -55,7 +59,12 @@ export default function NavAuth({ user }: NavAuthProps) {
       </div>
 
       <div className="flex items-center gap-5">
-        <a className="font-normal cursor-pointer">Historico</a>
+        <a
+          onClick={() => router.push("/history")}
+          className="font-normal cursor-pointer"
+        >
+          Historico
+        </a>
         <Button
           onClick={logout}
           variant="outline"
