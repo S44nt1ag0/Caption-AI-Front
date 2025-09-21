@@ -8,6 +8,7 @@ import React, { useEffect } from "react";
 import { LuEye } from "react-icons/lu";
 import { LuHistory } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
+import { getSessionToken } from "@/app/actions/GetCookie";
 
 interface IHistory {
   id: string;
@@ -21,13 +22,18 @@ export default function HistoryPage() {
 
   useEffect(() => {
     const fetchHistory = async () => {
+      const jwt = await getSessionToken();
+
       try {
-        const response = await fetch("/api/history", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/history`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
           setHistory(data);
@@ -64,45 +70,51 @@ export default function HistoryPage() {
       </div>
 
       <div className="w-full flex flex-col gap-5">
-        {history.map((item) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <Card className="w-full p-4 flex shadow-2xl flex-row items-center justify-between">
-              <div>
-                <h3>
-                  {item.title && item.title.length > 40
-                    ? `${item.title.slice(0, 40)}...`
-                    : item.title || item.id}
-                </h3>
-              </div>
+        {Array.isArray(history) && history.length > 0 ? (
+          history.map((item) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Card className="w-full p-4 flex shadow-2xl flex-row items-center justify-between">
+                <div>
+                  <h3>
+                    {item.title && item.title.length > 40
+                      ? `${item.title.slice(0, 40)}...`
+                      : item.title || item.id}
+                  </h3>
+                </div>
 
-              <div className="flex flex-row items-center gap-4">
-                <h3 className="flex flex-row items-center gap-2 text-white/60">
-                  <LuCalendar className="text-1xl text-white/80" />
-                  {new Date(item.createdAt).toLocaleString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </h3>
-                <Button
-                  variant="outline"
-                  className="p-6 cursor-pointer rounded-2xl min-w-[70px] shadow-2xs"
-                  onClick={() => router.push(`/caption/${item.id}`)}
-                >
-                  <LuEye className="text-white/80" />
-                </Button>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
+                <div className="flex flex-row items-center gap-4">
+                  <h3 className="flex flex-row items-center gap-2 text-white/60">
+                    <LuCalendar className="text-1xl text-white/80" />
+                    {new Date(item.createdAt).toLocaleString("pt-BR", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </h3>
+                  <Button
+                    variant="outline"
+                    className="p-6 cursor-pointer rounded-2xl min-w-[70px] shadow-2xs"
+                    onClick={() => router.push(`/caption/${item.id}`)}
+                  >
+                    <LuEye className="text-white/80" />
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+          ))
+        ) : (
+          <div className="text-white/60 text-center py-4">
+            Nenhuma pesquisa encontrada
+          </div>
+        )}
       </div>
     </motion.div>
   );

@@ -6,7 +6,9 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { BeatLoader } from 'react-spinners';
+import { BeatLoader } from "react-spinners";
+import { get } from "http";
+import { getSessionToken } from "@/app/actions/GetCookie";
 
 export default function Convert() {
   const router = useRouter();
@@ -32,13 +34,19 @@ export default function Convert() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/convert", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: search }),
-      });
+      const jwt = await getSessionToken();
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/caption`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify({ url: search }),
+        }
+      );
 
       const data = await res.json();
 
@@ -118,7 +126,11 @@ export default function Convert() {
                 disabled={loading}
                 className="p-7 rounded-full cursor-pointer w-full md:w-auto text-sm md:text-base"
               >
-                {loading ? <BeatLoader color="white" size={8} speedMultiplier={1} /> : "Convert"}
+                {loading ? (
+                  <BeatLoader color="white" size={8} speedMultiplier={1} />
+                ) : (
+                  "Convert"
+                )}
               </Button>
             </div>
           </motion.div>

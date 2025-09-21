@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getSessionToken } from "@/app/actions/GetCookie";
 
 interface UserData {
   id: string;
@@ -18,7 +19,17 @@ export function useProtectedPage() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("/api/me");
+        
+        const jwt = await getSessionToken();
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
         if (res.status === 401) {
           router.push("/auth");
           return;

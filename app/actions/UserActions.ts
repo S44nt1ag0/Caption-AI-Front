@@ -1,14 +1,18 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { getSessionToken } from "./GetCookie";
 
 export async function loginUser(email: string, password: string) {
   try {
-    const response = await fetch(`${process.env.BACKEND_ENDPOINT}/v1/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     const data = await response.json();
 
@@ -41,11 +45,19 @@ export async function createUser(
   name: string
 ) {
   try {
-    const response = await fetch(`${process.env.BACKEND_ENDPOINT}/v1/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name }),
-    });
+    const jwt = await getSessionToken();
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/create`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, name }),
+      }
+    );
 
     const data = await response.json();
 
