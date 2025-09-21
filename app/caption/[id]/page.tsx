@@ -7,6 +7,7 @@ import Result from "@/components/Caption/Result/Result";
 import toast from "react-hot-toast";
 
 import Loading from "@/components/Utils/Loading";
+import { getSessionToken } from "@/app/actions/GetCookie";
 
 interface ICaption {
   success: boolean;
@@ -27,7 +28,16 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
     const fetchCaption = async () => {
       try {
-        const res = await fetch(`/api/caption/${id}`);
+        const jwt = await getSessionToken();
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/caption/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
         if (!res.ok) throw new Error("Erro ao buscar caption");
         const data = await res.json();
         setCaption(data);
@@ -48,7 +58,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   }, [id]);
 
   if (loading || fetching) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (!id) {

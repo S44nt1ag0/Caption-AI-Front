@@ -6,6 +6,7 @@ import LogoPremium from "@/public/img/logo_premium.png";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { logoutUser } from "@/app/actions/Logout";
 
 interface User {
   id: string;
@@ -22,7 +23,7 @@ export default function NavAuth({ user }: NavAuthProps) {
   const router = useRouter();
 
   const logout = async () => {
-    await fetch("/api/logout");
+    await logoutUser();
     window.location.href = "/auth";
   };
 
