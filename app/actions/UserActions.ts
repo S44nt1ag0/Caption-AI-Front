@@ -2,24 +2,14 @@
 
 import { cookies } from "next/headers";
 import { getSessionToken } from "./GetCookie";
+import { AxiosService } from "@/services/AxiosService";
 
 export async function loginUser(email: string, password: string) {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      }
-    );
+    const { data } = await AxiosService.post("/v1/login", { email, password });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.message || `Erro ${response.status}: ${response.statusText}`
-      );
+    if (!data) {
+      throw new Error(data.message || "Erro desconhecido no login");
     }
 
     const cookieStore = await cookies();
@@ -47,24 +37,23 @@ export async function createUser(
   try {
     const jwt = await getSessionToken();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/create`,
+    const { data } = await AxiosService.post(
+      "/v1/create",
       {
-        method: "POST",
+        email,
+        password,
+        name,
+      },
+      {
         headers: {
-          Authorization: `Bearer ${jwt}`,
           "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
         },
-        body: JSON.stringify({ email, password, name }),
       }
     );
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.error || `Erro ${response.status}: ${response.statusText}`
-      );
+    if (!data) {
+      throw new Error(data.error || "Internal server error.");
     }
 
     return { success: true, message: data?.message || "User created." };

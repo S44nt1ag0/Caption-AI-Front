@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 
 import Loading from "@/components/Utils/Loading";
 import { getSessionToken } from "@/app/actions/GetCookie";
+import { AxiosService } from "@/services/AxiosService";
 
 interface ICaption {
   success: boolean;
@@ -30,16 +31,13 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       try {
         const jwt = await getSessionToken();
 
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/caption/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
-        if (!res.ok) throw new Error("Erro ao buscar caption");
-        const data = await res.json();
+        const { data } = await AxiosService.get(`/v1/caption/${id}`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+
+        if (!data) throw new Error("Erro ao buscar caption");
         setCaption(data);
       } catch {
         toast.error("Invalid Id Caption.", {

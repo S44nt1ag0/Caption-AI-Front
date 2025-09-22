@@ -7,8 +7,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { BeatLoader } from "react-spinners";
-import { get } from "http";
 import { getSessionToken } from "@/app/actions/GetCookie";
+import { AxiosService } from "@/services/AxiosService";
 
 export default function Convert() {
   const router = useRouter();
@@ -36,19 +36,18 @@ export default function Convert() {
     try {
       const jwt = await getSessionToken();
 
-      const res = await fetch(
+      const { data } = await AxiosService.post(
         `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/caption`,
         {
-          method: "POST",
+          url: search,
+        },
+        {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`,
           },
-          body: JSON.stringify({ url: search }),
         }
       );
-
-      const data = await res.json();
 
       if (data.error) {
         toast.error(data.error, {

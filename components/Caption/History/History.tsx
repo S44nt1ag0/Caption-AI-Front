@@ -9,6 +9,7 @@ import { LuEye } from "react-icons/lu";
 import { LuHistory } from "react-icons/lu";
 import { LuCalendar } from "react-icons/lu";
 import { getSessionToken } from "@/app/actions/GetCookie";
+import { AxiosService } from "@/services/AxiosService";
 
 interface IHistory {
   id: string;
@@ -25,17 +26,13 @@ export default function HistoryPage() {
       const jwt = await getSessionToken();
 
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/history`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
-        if (response.ok) {
-          const data = await response.json();
+        const { data } = await AxiosService.get("/v1/history", {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+
+        if (data) {
           setHistory(data);
         } else {
           console.error("Failed to fetch history");

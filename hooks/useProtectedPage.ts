@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getSessionToken } from "@/app/actions/GetCookie";
+import { AxiosService } from "@/services/AxiosService";
 
 interface UserData {
   id: string;
@@ -19,23 +20,20 @@ export function useProtectedPage() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        
         const jwt = await getSessionToken();
 
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/v1/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
-        if (res.status === 401) {
+        const { data: dataMe } = await AxiosService.get("/v1/me", {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+
+        if (!dataMe.name) {
           router.push("/auth");
           return;
         }
-        const data: UserData = await res.json();
-        setUserData(data);
+
+        setUserData(dataMe);
       } catch {
         router.push("/auth");
       } finally {
